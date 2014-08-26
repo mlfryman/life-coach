@@ -1,10 +1,10 @@
-## name of project
+## Life Coach
 ### Code Badges
 build status icon
 coverage status icon
 
 ### About
-write a description about your project
+Life Coach is an app that allows you to track your goals over time.
 
 ### Models
 ```
@@ -35,8 +35,8 @@ $ npm test
 ```
 
 ### Contributors
-- [Chyld Medford](https://github.com/chyld)
+- [Melanie Fryman](https://github.com/mlfryman)
 
 ### License
-[MIT](LICENSE)
+- [MIT](LICENSE)
 

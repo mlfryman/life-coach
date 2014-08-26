@@ -1,0 +1,34 @@
+{
+    "_id" : {"$oid":"a00000000000000000000001"},
+    "name" : "be the most interesting person in the world",
+    "dueDate" : {"$date":1409115600000},
+    "tags" : [
+        "charisma",
+        "world domination"
+    ],
+    "userId" : {"$oid":"000000000000000000000001"}
+}
+
+{
+    "_id" : {"$oid":"a00000000000000000000002"},
+    "name" : "save all of the kittehs",
+    "dueDate" : {"$date":1409115600000},
+    "tags" : [
+        "volunteering",
+        "personal",
+        "world domination"
+    ],
+    "userId" : {"$oid":"000000000000000000000001"}
+}
+
+{
+    "_id" : {"$oid":"a00000000000000000000003"},
+    "name" : "cure cancer",
+    "dueDate" : {"$date":1409115600000},
+    "tags" : [
+        "medical",
+        "personal",
+        "humanitarian"
+    ],
+    "userId" : {"$oid":"000000000000000000000002"}
+}

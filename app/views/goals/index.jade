@@ -1,0 +1,24 @@
+extends ../shared/template
+block content
+  .container
+    #banner.page-header
+      .row
+        .col-xs-12
+          h1#header Goals
+      .row
+        .col-xs-1
+        .col-xs-10
+          table.table.table-striped.table-hover
+            thead
+              th Name
+              th Due Date
+              th Tags
+            tbody
+              each goal in goals
+                tr
+                  td: a(href='/goals/#{goal._id}')= goal.name
+                  td= moment(goal.dueDate).format('ll')
+                    br
+                    |(#{moment(goal.dueDate).fromNow()})
+                  td= goal.tags
+        .col-xs-1

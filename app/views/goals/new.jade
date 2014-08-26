@@ -1,0 +1,23 @@
+extends ../shared/template
+block content
+  .container
+    #banner.page-header
+      .row
+        .col-xs-12
+          h1#header New Goal
+    .row
+      .col-xs-4
+        form(role='form', method='post', action='/goals')
+          .form-group
+            label(for='name') Goal Name
+            input.form-control#name(type='text', name='name', placeholder='Graduate NSS', autofocus=true)
+          .form-group
+            label(for='dueDate') Due Date
+            input.form-control#dueDate(type='date', name='dueDate', placeholder='mm/dd/yyy')
+          .form-group
+            label(for='tags') Tags
+            input.form-control#tags(type='text', name='tags', placeholder='education, web dev, JavaScript')
+          button.btn.btn-primary(type='submit') Add Goal
+      .col-xs-8
+
+block scripts

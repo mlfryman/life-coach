@@ -87,20 +87,18 @@ describe('goals', function(){ // Name of controller
   describe('get /goals/3', function(){
     it('should show a specific goal page', function(done){
       request(app)
-      .get('/goals/a00000000000000000000002')
-      .set('cookie', cookie)
-      .end(function(err, res){
+      .get('/goals/a00000000000000000000002').set('cookie', cookie).end(function(err, res){
+        console.log(res);
         expect(res.status).to.equal(200);
-        expect(res.text).to.include('');
+        expect(res.text).to.include('kitteh');
         done();
       });
     });
 
     it('should NOT show a specific goal page', function(done){
       request(app)
-      .get('/goals/a00000000000000000000003')
-      .set('cookie', cookie)
-      .end(function(err, res){
+      .get('/goals/a00000000000000000000003').set('cookie', cookie).end(function(err, res){
+        console.log(res);
         expect(res.status).to.equal(302);
         done();
       });
@@ -110,9 +108,7 @@ describe('goals', function(){ // Name of controller
   describe('get /goals/3/tasks', function(){
     it('should create a task for a specific goal', function(done){
       request(app)
-      .post('/goals/a00000000000000000000002/tasks')
-      .set('cookie', cookie)
-      .send('name=Adopt+1+kitteh&description=Go+to+Happy+Tales+and+adopt+the+first+kitteh+you+see%21&difficulty=2&rank=1')
+      .post('/goals/a00000000000000000000002/tasks').set('cookie', cookie).send('name=Adopt+1+kitteh&description=Go+to+Happy+Tales+and+adopt+the+first+kitteh+you+see%21&difficulty=2&rank=1')
       .end(function(err, res){
         expect(res.status).to.equal(302);
         done();

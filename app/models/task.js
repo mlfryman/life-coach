@@ -1,10 +1,6 @@
 'use strict';
 
-var Mongo = require('mongodb');
-
-function Task(o, goalId){
-  this._id = Mongo.ObjectID();
-  this.goalId = o.goalId;
+function Task(o){
   this.name = o.name;
   this.difficulty  = o.difficulty;
   this.description = o.description;

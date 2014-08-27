@@ -24,13 +24,14 @@ describe('Goal', function(){
   });
 
   describe('.create', function(){
-    it('should create a goal', function(done){
-      var reqBody = {name:'write a book', dueDate:'2014-08-27', tags:'work, capitalism', userId: Mongo.ObjectID('000000000000000000000001')};
-      console.log('----------REQ.BODY----------');
-      console.log(reqBody);
-      console.log('----------userId----------');
+    it('should create a new Goal object', function(done){
+      var body = {name:'write a book', dueDate:'2014-08-27', tags:'work, capitalism'},
+          userId = Mongo.ObjectID('000000000000000000000001');
+      console.log('----------TEST body----------');
+      console.log(body);
+      console.log('----------TEST userId----------');
       console.log(userId);
-      Goal.create(reqBody, function(err, goal){
+      Goal.create(body, userId, function(err, goal){
         expect(goal).to.be.instanceof(Goal);
         expect(goal._id).to.be.instanceof(Mongo.ObjectID);
         expect(goal.userId).to.be.instanceof(Mongo.ObjectID);
@@ -63,27 +64,31 @@ describe('Goal', function(){
     });
   });
 
-  describe('.addTask', function(){
-    it('should add a task to user\'s goal', function(done){
-      var goalId = 'a00000000000000000000002',
-          body = {name:'Adopt 1 kitteh', description:'Go to Happy Tales and adopt the first kitteh you see!', difficulty:2, rank:1},
-          userId = Mongo.ObjectID('000000000000000000000001');
-      Goal.addTask(body, goalId, userId, function(err, goal){
-        expect(goal.tasks).to.have.length(1);
-        expect(goal.tasks[0].rank).to.equal(1);
-        done();
-      });
-    });
-    it('should not add a task to non-logged in user\'s goal', function(done){
-      var goalId = 'a00000000000000000000003',
-          body = {name:'Find test subjects', description:'Put a recruitment advertisement in the local paper.', difficulty:1, rank:3},
-          userId = Mongo.ObjectID('000000000000000000000001');
-      Goal.addTask(body, goalId, userId, function(err, goal){
-        expect(goal).to.be.undefined;
-        done();
+  describe('#save', function(){
+    it('should save a goal', function(done){
+      var userId = Mongo.ObjectID('000000000000000000000001'),
+          goalId = 'a00000000000000000000002';
+      Goal.findByGoalIdAndUserId(goalId, userId, function(err, goal){
+        goal.name = 'stuff';
+        goal.save(function(err, count){
+          expect(count).to.equal(1);
+          done();
+        });
       });
     });
   });
 
+  describe('#addTask', function(){
+    it('should save a goal', function(done){
+      var userId = Mongo.ObjectID('000000000000000000000001'),
+          goalId = 'a00000000000000000000001';
+      Goal.findByGoalIdAndUserId(goalId, userId, function(err, goal){
+        goal.addTask({name:'w', difficulty:'x', description:'y', rank:'z'});
+        expect(goal.tasks[0].name).to.equal('w');
+        expect(goal.tasks[0]._isComplete).to.be.false;
+        done();
+      });
+    });
+  });
 // Last bracket
 });

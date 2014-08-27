@@ -9,7 +9,6 @@ exports.new = function(req, res){
 
 exports.create = function(req, res){
   Goal.create(req.body, res.locals.user._id, function(){
-    console.log(req.body);
     res.redirect('/goals');
   });
 };
@@ -31,11 +30,11 @@ exports.show = function(req, res){
 };
 
 exports.addTask = function(req, res){
-  Goal.findByGoalIdAndUserId(req.params.goalId, res.local.user._id, function(err, goal){
-    if(!goal){res.redirect('/');
-    }else{
-    }
-    res.redirect('/goals/' + req.params.id);
+  Goal.findByGoalIdAndUserId(req.params.goalId, res.locals.user._id, function(err, goal){
+    if(!goal){res.redirect('/');}
+    goal.addTask(req.body);
+    goal.save(function(){
+      res.redirect('/goals/' + req.params.goalId);
+    });
   });
 };
-

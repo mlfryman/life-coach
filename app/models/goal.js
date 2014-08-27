@@ -5,13 +5,12 @@ var Mongo = require('mongodb'),
     _     = require('lodash');
 
 function Goal(o, userId){
-  this._id = Mongo.ObjectID();
-  this.userId = o.userId;
   this.name = o.name;
   this.dueDate  = new Date(o.dueDate);
   this.tags = o.tags.split(',');
   this.tags = _.compact(this.tags);
   this.tasks = [];
+  this.userId = o.userId;
 }
 
 Object.defineProperty(Goal, 'collection', {
@@ -29,24 +28,22 @@ Goal.findAllByUserId = function(userId, cb){
 
 Goal.findByGoalIdAndUserId = function(goalId, userId, cb){
   var _id = Mongo.ObjectID(goalId);
-  Goal.collection.findOne({_id:_id, userId:userId}, cb);
+  Goal.collection.findOne({_id:_id, userId:userId}, function(err, obj){
+    if(obj){
+      cb(err, _.create(Goal.prototype, obj));
+    }else{
+      cb();
+    }
+  });
 };
 
-Goal.addTask = function(data, goalId, userId, cb){
-  Goal.findByGoalIdAndUserId(goalId, userId, function(err, goal){
-    console.log('---------GOAL---------');
-    console.log(goal);
-    if(!goal){return cb();}
+Goal.prototype.addTask = function(o){
+  var task = new Task(o);
+  this.tasks.push(task);
+};
 
-    var task = new Task(data);
-    console.log('---------TASK---------');
-    console.log(task);
-    goal.tasks.push(task);
-    Goal.collection.save(goal, function(){
-      cb(null, goal);
-    });
-
-  });
+Goal.prototype.save = function(cb){
+  Goal.collection.save(this, cb);
 };
 
 module.exports = Goal;
